@@ -1,64 +1,64 @@
-function getTasksFromLocalStorage() {
-    const tasks = localStorage.getItem('tasks');
-    return tasks ? JSON.parse(tasks) : [];
+function obterTarefasDoLocalStorage() {
+    const tarefas = localStorage.getItem('tarefas');
+    return tarefas ? JSON.parse(tarefas) : [];
 }
 
-function saveTasksToLocalStorage(tasks) {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+function salvarTarefasNoLocalStorage(tarefas) {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
 }
 
-function addTask(task) {
-    const tasks = getTasksFromLocalStorage();
-    tasks.push({ text: task, completed: false });
-    saveTasksToLocalStorage(tasks);
-    renderTasks();
+function adicionarTarefa(tarefa) {
+    const tarefas = obterTarefasDoLocalStorage();
+    tarefas.push({ texto: tarefa, concluida: false });
+    salvarTarefasNoLocalStorage(tarefas);
+    renderizarTarefas();
 }
 
-function removeTask(index) {
-    const tasks = getTasksFromLocalStorage();
-    tasks.splice(index, 1);
-    saveTasksToLocalStorage(tasks);
-    renderTasks();
+function removerTarefa(indice) {
+    const tarefas = obterTarefasDoLocalStorage();
+    tarefas.splice(indice, 1);
+    salvarTarefasNoLocalStorage(tarefas);
+    renderizarTarefas();
 }
 
-function toggleTaskCompletion(index) {
-    const tasks = getTasksFromLocalStorage();
-    tasks[index].completed = !tasks[index].completed;
-    saveTasksToLocalStorage(tasks);
-    renderTasks();
+function alternarConclusaoTarefa(indice) {
+    const tarefas = obterTarefasDoLocalStorage();
+    tarefas[indice].concluida = !tarefas[indice].concluida;
+    salvarTarefasNoLocalStorage(tarefas);
+    renderizarTarefas();
 }
 
-function renderTasks() {
-    const tasks = getTasksFromLocalStorage();
-    const taskList = document.getElementById('taskList');
-    taskList.innerHTML = '';
+function renderizarTarefas() {
+    const tarefas = obterTarefasDoLocalStorage();
+    const listaTarefas = document.getElementById('listaTarefas');
+    listaTarefas.innerHTML = '';
 
-    tasks.forEach((task, index) => {
+    tarefas.forEach((tarefa, indice) => {
         const li = document.createElement('li');
-        li.className = task.completed ? 'completed' : '';
+        li.className = tarefa.concluida ? 'concluida' : '';
 
         li.innerHTML = `
-            <span>${task.text}</span>
+            <span>${tarefa.texto}</span>
             <div>
-                <button onclick="toggleTaskCompletion(${index})">${task.completed ? 'Desmarcar' : 'Concluir'}</button>
-                <button onclick="removeTask(${index})">Remover</button>
+                <button onclick="alternarConclusaoTarefa(${indice})">${tarefa.concluida ? 'Desmarcar' : 'Concluir'}</button>
+                <button onclick="removerTarefa(${indice})">Remover</button>
             </div>
         `;
 
-        taskList.appendChild(li);
+        listaTarefas.appendChild(li);
     });
 }
 
-document.getElementById('taskInput').addEventListener('keydown', (event) => {
+document.getElementById('entradaTarefa').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const taskInput = document.getElementById('taskInput');
-        const taskText = taskInput.value.trim();
+        const entradaTarefa = document.getElementById('entradaTarefa');
+        const textoTarefa = entradaTarefa.value.trim();
 
-        if (taskText) {
-            addTask(taskText);
-            taskInput.value = '';
+        if (textoTarefa) {
+            adicionarTarefa(textoTarefa);
+            entradaTarefa.value = '';
         }
     }
 });
 
-renderTasks();
+renderizarTarefas();
