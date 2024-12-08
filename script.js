@@ -49,13 +49,15 @@ function renderTasks() {
     });
 }
 
-document.getElementById('addTaskButton').addEventListener('click', () => {
-    const taskInput = document.getElementById('taskInput');
-    const taskText = taskInput.value.trim();
+document.getElementById('taskInput').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        const taskInput = document.getElementById('taskInput');
+        const taskText = taskInput.value.trim();
 
-    if (taskText) {
-        addTask(taskText);
-        taskInput.value = '';
+        if (taskText) {
+            addTask(taskText);
+            taskInput.value = '';
+        }
     }
 });
 

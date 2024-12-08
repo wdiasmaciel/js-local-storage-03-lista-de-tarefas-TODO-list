@@ -18,12 +18,9 @@ h1 {
 }
 
 input {
-    width: 70%;
+    width: 100%;
     padding: 10px;
-}
-
-button {
-    padding: 10px;
+    margin-bottom: 10px;
 }
 
 ul {
@@ -41,4 +38,5 @@ li {
 li.completed {
     text-decoration: line-through;
     color: #a0a0a0;
+    background-color: #ddd;
 }
